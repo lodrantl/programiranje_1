@@ -74,6 +74,8 @@ isPalindrome l = l == reverse l
 -- Example:
 -- ghci> pointwiseMax [1,10,5,6] [2,3,7,4,8]
 -- [2,10,7,6]
+
+-- grozna rešitev....
 pointwiseMax l1 l2 = [maximum[l1 !! i, l2 !! i] | i <- [0..minimum [length l1, length l2] -1]]
 
 -- secondLargest l returns the second largest element of l.
