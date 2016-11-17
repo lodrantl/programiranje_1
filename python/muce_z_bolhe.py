@@ -34,10 +34,10 @@ def get_ads(sites):
 
 
 def write_csv(filename, ads):
-    with open('muce.csv', 'w', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, dialect='excel', fieldnames=["Naslov", "Opis", "Cena"], )
-        writer.writeheader()
-        writer.writerows(ads)
+with open('muce.csv', 'w', encoding='utf-8') as f:
+    writer = csv.DictWriter(f, dialect='excel', fieldnames=["Naslov", "Opis", "Cena"], )
+    writer.writeheader()
+    writer.writerows(ads)
 
 
 def send_file(filename, address, subject):
