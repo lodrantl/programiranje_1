@@ -127,6 +127,8 @@ permutations lst
 -- Example:
 -- ghci> hanoi 3 1 3
 -- [(1,3),(1,2),(3,2),(1,3),(2,1),(2,3),(1,3)]
--- ghci> hanoi 4 1 3
+-- ghci> hanoi 4 1 re3
 -- [(1,2),(1,3),(2,3),(1,2),(3,1),(3,2),(1,2),(1,3),(2,3),(2,1),(3,1),(2,3),(1,2),(1,3),(2,3)]
-hanoi = undefined
+hanoi :: Int -> Int -> Int -> [(Int, Int)]
+hanoi 1 a b = [(a,b)]
+hanoi n a b = hanoi (n-1) a c ++ [(a,b)] ++ hanoi (n-1) c b where c = 6 - a - b
