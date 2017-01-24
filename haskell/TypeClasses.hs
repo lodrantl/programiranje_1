@@ -34,22 +34,32 @@ instance Num Natural where
 instance Num Complex where
   (Complex x1 y1) + (Complex x2 y2) = Complex (x1+x2) (y1+y2)
 
-  (Complex x1 y1) * (Complex x2 y2) = Complex (x1*x2-y1*y2) (x1*y2+y1*x2)
+  (Complex x1 y1) * (Complex x2 y2) = Complex ((x1*x2)-(y1*y2)) ((x1*y2)+(y1*x2))
 
-  abs (Complex x y) = (x^2+y^2)^(1/2)
+  abs (Complex x y) = Complex (abs x) (abs y)
 
-  fromInteger n = Complex n 0
+  fromInteger n = Complex (fromInteger n) 0
 
   signum c = error "Complex don't have a sign"
 
   negate (Complex x y) = Complex (-x) (-y)
 
-instance Num Polynomial where
-  (Polynomial []) + p = p
-  p + (Polynomial []) = p
-  (Polynomial (x:xs)) + (Polynomial (y:ys)) = (x+y):(Polynomial xs + Polynomial ys)
+add x [] = x
+add [] x = x
+add (x:xs) (y:ys) = (x+y):add xs ys
 
-  (Polynomial)
+multiply [x] [y] = [x*y]
+multiply [k] p = [k*x | x <- p]
+multiply (x:xs) p = add (multiply [x] p) (multiply xs (0:p))
+
+instance Num Polynomial where
+  (Polynomial x) + (Polynomial y) = Polynomial (add x y)
+
+  (Polynomial x) * (Polynomial y) = Polynomial (multiply x y)
+
+  fromInteger n = Polynomial [fromInteger n]
+  abs (Polynomial p) = Polynomial [abs x | x <- p]
+  negate (Polynomial p) = Polynomial [ -x | x <- p]
 
   signum = error "Polynomial: operation signum does not make sense"
 
@@ -62,11 +72,19 @@ instance Num Polynomial where
 class  Semigroup a  where
     (***) :: a -> a -> a
 
-
 -- Define the following classes (extensions):
 -- + SemigroupWithUnit (with a special element "unit")
 -- + Group (with an "inv" function)
 -- + Ring
+
+class (Semigroup a) => SemigroupWithUnit a where
+  unit :: a
+
+class (SemigroupWithUnit a) => Group a where
+  inv :: a -> a
+
+class (Group a) => Ring a where
+  (*) :: a -> a -> a
 
 -- Show that the integers belong to the Ring class
 
