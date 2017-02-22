@@ -1,1 +1,0 @@
-data Drevo = Drevo String [Drevo] deriving Showver :: String -> Int -> [String]

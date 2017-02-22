@@ -1,3 +1,5 @@
+module Izpit where
+
 vrednost :: Fractional t => [(Int, t)] -> t -> t
 
 vrednost [] _ = 0
@@ -18,7 +20,7 @@ produkt _ [] = []
 produkt s1@([(e1, k1)]) ((e2, k2):o2) = (e1+e2, k1*k2):(produkt s1 o2)
 produkt (p1:o1) s2 = vsota (produkt [p1] s2) (produkt o1 s2)
 
-koeficienti :: Eq t => Fractional t => [(Int, t)] -> [t]
+koeficienti :: Fractional t => [(Int, t)] -> [t]
 koeficienti p = koeficienti_t p 0 where
   koeficienti_t [] _ = []
   koeficienti_t ((e, k):o) x | e == x = k:(koeficienti_t o (x+1))
